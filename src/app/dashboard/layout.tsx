@@ -7,7 +7,7 @@ import Header from '@/app/dashboard/_components/Header';
 
 const DashboardLayout = ({ children }: DashboardProps) => {
     return (
-        <section className='md:flex'>
+        <section className='md:flex text-[4vw] md:text-[2vw]'>
             <div className='sticky left-0 hidden md:w-64 md:block'>
                 <SideNavBar />
             </div>

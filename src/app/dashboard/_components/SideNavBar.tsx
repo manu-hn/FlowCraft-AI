@@ -10,19 +10,21 @@ type Props = {}
 const SideNavBar = (props: Props) => {
   const pathname = usePathname();
   return (
-    <section className='h-screen border shadow-lg'>
-      <div className='flex items-center'>
+    <section className='h-full border shadow-lg'>
+      <div className='flex items-center py-[0.75em] '>
         <Image priority={true} src={`/assets/logos/FlowCraftAI.webp`} alt='FlowCraft AI Logo' width={500} height={100} />
 
       </div>
-      <nav className='mt-4 border-t'>
+      <nav className=' border-t'>
         {
           MENU_LIST?.map((item) => (
             <Link key={item?.id} href={item.path}
-              className={`flex w-full gap-4 hover:bg-gray-100 hover:font-semibold 
-              hover:text-black py-3 px-6 my-2 rounded-lg ${pathname === item?.path && "bg-primary"}`}>
-              {React.createElement(item.icon)}
-              <p>{item.title}</p>
+              className={`flex w-full gap-4 hover:${pathname === item?.path ? "bg-primary text-white" : "bg-gray-100"}
+               hover:font-semibold items-center px-[0.25em]
+              hover:text-black py-[0.1em] my-[0.3em] rounded-lg ${pathname === item?.path && "bg-primary"}`}>
+              
+              <item.icon className='text-[0.75em]' />
+              <p className='text-[0.75em]'>{item.title}</p>
             </Link>
 
           ))

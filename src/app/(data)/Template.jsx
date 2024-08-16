@@ -1,9 +1,9 @@
 export default [
     {
         name: 'Blog Title',
-        dess: 'An AI tool that generates blog title depends on your blog information',
+        desc: 'An AI tool that generates blog title depends on your blog information',
         category: 'Blog',
-        icon: '/asstes/icons/blog-title.png',
+        icon: 'https://cdn-icons-png.flaticon.com/128/4186/4186534.png',
         aiPrompt: `Give me 5 blog topic idea in bulle wise only based on given niche and outline and give me result in rich text editor format `,
         slug: 'generate-blog-title',
         form: [

@@ -1,17 +1,20 @@
-import React from 'react'
-import SearchBar from './_components/SearchBar';
-import TemplateList from './_components/TemplateList';
+"use client";
+import React, { useState } from 'react';
+import SearchBar from '@/components/dashboard/SearchBar';
+import TemplateList from '@/components/dashboard/TemplateListComponent';
 
-type Props = {}
+type Props = {};
 
 const DashBoard = (props: Props) => {
-  return (
-    <section>
-      <SearchBar />
+  const [userSearchInput, setUserSearchInput] = useState<string | null>(null);
+ 
 
-      <TemplateList />
+  return (
+    <section className='text-[4vw] md:text-[2vw]'>
+      <SearchBar onSearchUserInput={setUserSearchInput} />
+      <TemplateList userSearchInput={userSearchInput} />
     </section>
-  )
-}
+  );
+};
 
 export default DashBoard;
