@@ -1,22 +1,23 @@
 'use client';
 import React, { useEffect, useState } from 'react';
-import Template from "@/app/(data)/Template"
+
 import type { TEMPLATE_TYPE } from '@/utils/types';
 import TemplateCard from './TemplateCard';
+import { TEMPLATE_LIST_DATA } from '@/utils/data';
 
 type Props = {
     userSearchInput: string | null;
 }
 
 const TemplateList = ({ userSearchInput }: Props) => {
-    const [templateList, setTemplateList] = useState(Template);
+    const [templateList, setTemplateList] = useState(TEMPLATE_LIST_DATA);
 
     useEffect(() => {
         if(userSearchInput){
-            const filteredList = Template.filter(template => template.name.toLowerCase().includes(userSearchInput.toLowerCase()));
+            const filteredList = TEMPLATE_LIST_DATA.filter(template => template.name.toLowerCase().includes(userSearchInput.toLowerCase()));
             setTemplateList(filteredList);
         }else{
-            setTemplateList(Template);
+            setTemplateList(TEMPLATE_LIST_DATA);
         }
     
     }, [userSearchInput])
