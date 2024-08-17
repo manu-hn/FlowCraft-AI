@@ -10,7 +10,7 @@ type Props = {}
 const SideNavBar = (props: Props) => {
   const pathname = usePathname();
   return (
-    <section className='h-full border shadow-lg'>
+    <section className='h-screen border shadow-lg'>
       <div className='flex items-center py-[0.75em] '>
         <Image priority={true} src={`/assets/logos/FlowCraftAI.webp`} alt='FlowCraft AI Logo' width={500} height={100} />
 
