@@ -3,6 +3,8 @@ import FormSection from '@/components/form-component/FormSection';
 import OutPutSection from '@/components/form-component/OutPutSection';
 import { TEMPLATE_LIST_DATA } from '@/utils/data';
 import { TEMPLATE_TYPE } from '@/utils/types';
+import { ArrowLeftIcon } from '@radix-ui/react-icons';
+import Link from 'next/link';
 import React from 'react'
 
 type Props = {
@@ -19,10 +21,16 @@ const NewContentForm = ({ params }: Props) => {
     console.log(data)
   }
   return (
-    <section className='grid grid-cols-1 md:grid-cols-3 gap-[2em] p-[1em] '>
-      <FormSection selectedTemplate={selectedTemplate} getUserInputFormData={(value: any) => generateDataFromAI(value)} />
-      <div className='col-span-2'>
-        <OutPutSection />
+    <section className=''>
+      <Link href={'/dashboard'} 
+      className='flex items-center text-[0.5em] bg-orange-500 text-white w-[8em] justify-center m-[1em] rounded-md py-[0.35em]'>
+        <ArrowLeftIcon className='mx-[0.25em]' /> Back
+      </Link>
+      <div className='grid grid-cols-1 md:grid-cols-3 gap-[2em] p-[1em] '>
+        <FormSection selectedTemplate={selectedTemplate} getUserInputFormData={(value: any) => generateDataFromAI(value)} />
+        <div className='col-span-2'>
+          <OutPutSection />
+        </div>
       </div>
     </section>
   )
