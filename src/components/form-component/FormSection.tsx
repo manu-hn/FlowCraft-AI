@@ -29,7 +29,7 @@ const FormSection = ({ selectedTemplate, getUserInputFormData }: Props) => {
 
 
   return (
-    <div className='shadow-md p-[0.75em] rounded-lg border bg-slate-50'>
+    <div className='shadow-md p-[0.75em] rounded-lg  bg-slate-50 border md:max-h-[17.5em]'>
       <Image alt={`${selectedTemplate?.name} icon`} src={`${selectedTemplate?.icon}`} width={75} height={75} />
       <Heading classNames='text-[1em] md:text-[0.75em] font-bold text-primary'>{selectedTemplate?.name}</Heading>
       <p className='md:text-[0.55em]'>{selectedTemplate?.desc}</p>
