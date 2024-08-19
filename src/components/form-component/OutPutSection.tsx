@@ -5,11 +5,20 @@ import { CopyIcon } from '@radix-ui/react-icons';
 import '@toast-ui/editor/dist/toastui-editor.css';
 
 import { Editor } from '@toast-ui/react-editor';
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
 
+type OutPutProps = {
+  geminiResults: string;
+}
 
-const OutPutSection = () => {
+const OutPutSection = ({ geminiResults }: OutPutProps) => {
   const editorRef: any = useRef(null);
+  
+
+  useEffect(() => {
+    const editorInstance = editorRef.current.getInstance();
+    editorInstance.setMarkdown(geminiResults)
+  }, [geminiResults])
 
   return (
     <div className='md:max-h-[17.5em] bg-[#FFF] border shadow-md py-[0.75em]'>
@@ -20,7 +29,7 @@ const OutPutSection = () => {
       <Editor
         ref={editorRef}
         initialValue="Your results will be reflected here"
-      
+
         height="15em"
         initialEditType="wysiwyg"
         useCommandShortcut={true}

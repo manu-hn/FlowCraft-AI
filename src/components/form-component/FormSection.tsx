@@ -6,13 +6,15 @@ import Image from 'next/image';
 import { Input } from '../ui/input';
 import { Textarea } from '../ui/textarea';
 import { Button } from '../ui/button';
+import { LoaderCircle } from 'lucide-react';
 
 type Props = {
   selectedTemplate?: TEMPLATE_TYPE,
-  getUserInputFormData(value: any): void
+  getUserInputFormData(value: any): void,
+  loading: boolean
 }
 
-const FormSection = ({ selectedTemplate, getUserInputFormData }: Props) => {
+const FormSection = ({ selectedTemplate, getUserInputFormData, loading }: Props) => {
   const [formData, setFormData] = useState<{ [key: string]: any }>({});
   async function handleSubmit(e: any) {
     e.preventDefault();
@@ -55,7 +57,9 @@ const FormSection = ({ selectedTemplate, getUserInputFormData }: Props) => {
             </div>
           ))
         }
-        <Button className='' type='submit'>Create</Button>
+        <Button className='flex' type='submit' disabled={loading}>
+          {loading && <LoaderCircle  className='mx-[0.5em] animate-spin' />  }Create
+        </Button>
       </form>
     </div>
   )
