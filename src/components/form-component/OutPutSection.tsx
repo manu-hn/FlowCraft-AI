@@ -29,7 +29,6 @@ const OutPutSection = ({ geminiResults }: OutPutProps) => {
       <Editor
         ref={editorRef}
         initialValue="Your results will be reflected here"
-
         height="15em"
         initialEditType="wysiwyg"
         useCommandShortcut={true}
