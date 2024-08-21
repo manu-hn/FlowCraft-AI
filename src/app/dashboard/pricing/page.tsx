@@ -4,8 +4,8 @@ type Props = {}
 
 const Pricing = (props: Props) => {
   return (
-    <section>Pricing</section>
+    <section>Pricing Section</section>
   )
 }
 
-export default Pricing;``
+export default Pricing;

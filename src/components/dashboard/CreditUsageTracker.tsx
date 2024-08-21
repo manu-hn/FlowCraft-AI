@@ -17,13 +17,14 @@ const CreditUsageTracker = () => {
 
     useEffect(() => {
         user && getData();
-    }, [user])
+    }, [user, getData])
 
 
-    const getData = async () => {
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    async function getData() {
         {/* @ts-ignore */ }
         const results: Array<HISTORY_TYPE> = await db.select().from(GeminiOutpuSchema)
-            .where(eq(GeminiOutpuSchema.createdBy, user?.primaryEmailAddress?.emailAddress));
+            .where(eq(GeminiOutpuSchema.createdBy, `${user?.primaryEmailAddress?.emailAddress}`));
 
         GetTotalUsage(results)
     }
@@ -55,4 +56,4 @@ const CreditUsageTracker = () => {
     )
 }
 
-export default CreditUsageTracker
+export default CreditUsageTracker;
