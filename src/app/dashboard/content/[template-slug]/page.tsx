@@ -1,10 +1,14 @@
 'use client';
 import FormSection from '@/components/form-component/FormSection';
 import OutPutSection from '@/components/form-component/OutPutSection';
+import { db } from '@/model/db';
 import { chatSession } from '@/model/GeminiAiModel';
+import { GeminiOutpuSchema } from '@/model/schema';
 import { TEMPLATE_LIST_DATA } from '@/utils/data';
 import { TEMPLATE_TYPE } from '@/utils/types';
+import { useUser } from '@clerk/nextjs';
 import { ArrowLeftIcon } from '@radix-ui/react-icons';
+import moment from 'moment';
 import Link from 'next/link';
 import React, { useState } from 'react'
 
@@ -17,6 +21,7 @@ type Props = {
 const NewContentForm = ({ params }: Props) => {
   const [geminiResults, setGeminiResults] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
+  const { user } = useUser();
   const selectedTemplate: TEMPLATE_TYPE | undefined = TEMPLATE_LIST_DATA.find((item) => item?.slug === params?.['template-slug']);
 
   async function generateDataFromAI(data: any) {
@@ -25,9 +30,25 @@ const NewContentForm = ({ params }: Props) => {
     const FinalPromptForGemini = JSON.stringify(data) + " , " + SelectedPrompt;
 
     const results = await chatSession.sendMessage(FinalPromptForGemini);
-    setGeminiResults(results?.response?.text())
+    setGeminiResults(results?.response?.text());
+    console.log(results?.response?.text())
+    await saveToDb(data, selectedTemplate?.slug, results?.response?.text())
+    
     setLoading(false);
+    
   }
+
+  async function saveToDb(formData: any, slug: any, geminiOutput: string) {
+    const results = await db.insert(GeminiOutpuSchema).values({
+      formData: formData || '',
+      templateSlug: slug || '',
+      gemeiniResponse: geminiOutput || '',
+      createdBy: user?.primaryEmailAddress?.emailAddress || '',
+      createdAt: moment().format('DD/MM/YYYY')
+    });
+    console.log(results)
+  }
+
   return (
     <section className=''>
       <Link href={'/dashboard'}
