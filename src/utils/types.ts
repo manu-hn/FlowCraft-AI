@@ -33,3 +33,18 @@ export type TEMPLATE_TYPE = {
 
 
 }
+
+
+export type HISTORY_TYPE = {
+    id: number,
+    formData: string,
+    gemeiniResponse: string | null,
+    templateSlug: string,
+    createdBy: string, // Update this to match the results
+    createdAt: string | null
+}
+
+
+export type USAGE_STATE_TYPE = {
+    totalUsage: number
+}

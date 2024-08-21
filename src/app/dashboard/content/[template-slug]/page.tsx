@@ -1,6 +1,7 @@
 'use client';
 import FormSection from '@/components/form-component/FormSection';
 import OutPutSection from '@/components/form-component/OutPutSection';
+import { CreditsUsageContext } from '@/context/CreditsTotalUsageContext';
 import { db } from '@/model/db';
 import { chatSession } from '@/model/GeminiAiModel';
 import { GeminiOutpuSchema } from '@/model/schema';
@@ -10,7 +11,9 @@ import { useUser } from '@clerk/nextjs';
 import { ArrowLeftIcon } from '@radix-ui/react-icons';
 import moment from 'moment';
 import Link from 'next/link';
-import React, { useState } from 'react'
+import { useRouter } from 'next/navigation';
+import { useSnackbar } from 'notistack';
+import React, { useContext, useState } from 'react'
 
 type Props = {
   params: {
@@ -21,10 +24,21 @@ type Props = {
 const NewContentForm = ({ params }: Props) => {
   const [geminiResults, setGeminiResults] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
+  const { state, dispatch } = useContext(CreditsUsageContext);
+  const { enqueueSnackbar } = useSnackbar()
+
   const { user } = useUser();
+  const router = useRouter()
   const selectedTemplate: TEMPLATE_TYPE | undefined = TEMPLATE_LIST_DATA.find((item) => item?.slug === params?.['template-slug']);
 
   async function generateDataFromAI(data: any) {
+    if (state?.totalUsage >= 10000) {
+      (() => {
+        enqueueSnackbar("Please Upgrade", { autoHideDuration: 1500 });
+      })();
+      router.push('/dashboard/billing');
+      return;
+    }
     setLoading(true);
     const SelectedPrompt = selectedTemplate?.aiPrompt;
     const FinalPromptForGemini = JSON.stringify(data) + " , " + SelectedPrompt;
@@ -33,9 +47,9 @@ const NewContentForm = ({ params }: Props) => {
     setGeminiResults(results?.response?.text());
     console.log(results?.response?.text())
     await saveToDb(data, selectedTemplate?.slug, results?.response?.text())
-    
+
     setLoading(false);
-    
+
   }
 
   async function saveToDb(formData: any, slug: any, geminiOutput: string) {
